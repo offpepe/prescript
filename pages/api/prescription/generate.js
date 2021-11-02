@@ -5,32 +5,11 @@ import bold from 'pdfjs/font/Helvetica-Bold';
 import boldItalic from 'pdfjs/font/Times-BoldItalic';
 import timesBold from 'pdfjs/font/Times-Bold';
 
-const recipesMOCK = [
-  {
-    name: 'HIDROXIDO DE MAGNÉSIO',
-    qtd: '1 FRASCO',
-    apparence: '',
-    usage: 'INGERIR, POR VIA ORAL, 10ML DA SUBSTÂNCIA UMA HORA APÓS ALIMENTAÇÃO SE DOR EM QUEIMAÇÃO',
-    obs:'USAR NO MÁXIMO 4 VEZES AO DIA POR 14 DIAS'
-  },
-  {
-    name: 'OMEPRAZOL',
-    qtd: '28 COMPRIMIDOS',
-    apparence: '20MG',
-    usage: 'INGERIR UM COMPRIMIDO, POR VIA ORAL PELA MANHÃ, ANTES DO CAFÉ DA MANHÃ',
-    obs: ''
-  },
-  {
-    name: 'SIMETICONA',
-    qtd: '1 FRASCO',
-    apparence: '75MG/ML',
-    usage: 'INGERIR 15 GOTAS DE 6/6H POR VIA ORAL SE DESCONFORTO ABDOMINAL',
-    obs: ''
-  },
-]
+// const recipesMOCK = 
 
-const generatePDF = async (_req, res) => {
+const generatePDF = async (req, res) => {
   try {
+  const { fullname, medications } = req.body;
   const headerIMG = new pdfJS.Image(fs.readFileSync('./static/brasão.jpg'));
   const secIMG = new pdfJS.Image(fs.readFileSync('./static/secIcon.jpeg'));
   const recipeSymbol = new pdfJS.Image(fs.readFileSync('./static/Rx_symbol.jpg'));
@@ -64,7 +43,7 @@ const generatePDF = async (_req, res) => {
       lineHeight: 1.3,
       paddingLeft: 30,
       paddingTop: 115,
-    }).text('PARA: \n INSERT NAME HERE');
+    }).text(`PARA: \n ${fullname}`);
 
 
     const addRecipe = (name, qtd, apparence, usage, obs) => {
@@ -79,7 +58,7 @@ const generatePDF = async (_req, res) => {
       
     }
 
-    recipesMOCK.map(({ name, qtd, apparence, usage, obs }) => addRecipe(name, qtd, apparence, usage, obs));
+    medications.map(({ name, qtd, apparence, usage, obs }) => addRecipe(name, qtd, apparence, usage, obs));
 
     const signatureAndDate = doc.table({ widths: [null, null], paddingLeft: 30, paddingTop: 60 }).row();
     const date = new Date().toLocaleDateString('pt-BR')
@@ -93,8 +72,7 @@ const generatePDF = async (_req, res) => {
     .add('DATA', { underline: false });
 
     const output = await doc.asBuffer()
-    res.status(200).json(output)
-    await doc.end();
+    return res.status(200).json(output, () => doc.end());
   } catch (err) { 
     res.status(500).json({ err: { code: 'internal_error', message: err.message  } });
   }
