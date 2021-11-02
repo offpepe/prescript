@@ -1,9 +1,26 @@
-import Head from 'next/head'
-import { Form, Button } from 'react-bootstrap'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-// import styles from '../styles/Home.module.css'
+import Head from 'next/head'
+import { useState } from 'react';
+import { Form, Button } from 'react-bootstrap'
 
 export default function Home() {
+  const [medications, setMedications] = useState([])
+  const [fullname, setFullname] = useState('');
+  const [copies, setCopies] = useState(1);
+
+  const generatePDF = async () => {
+    const prescriptionData = {
+      fullname,
+      medications,
+    }
+
+    const res = await fetch('http://localhost:3000/api/prescription/generate', {
+      method: 'POST',
+      body: JSON.stringify(prescriptionData),
+    })
+    console.log(res);
+
+  }
   return (
     <>
       <Head>
@@ -18,31 +35,88 @@ export default function Home() {
         justifyContent: 'center',
         }} >
         <h1> Gerador de prescrição </h1>
-      <Form style={ { width: '70%' } }>
+      <Form style={ { width: '70%' } } >
         <Form.Group>
-          <Form.Label for="name"> Nome completo </Form.Label>
-          <Form.Control type="text" name="name" id="name" placeholder="Escreva seu nome completo" min="6" required />
-          <Form.Label for="copies"> Número de cópias </Form.Label>
-          <Form.Control type="number" name="copies" id="copies" defaultValue="1" />
+          <Form.Label htmlFor="name"> Nome completo </Form.Label>
+          <Form.Control
+            type="text"
+            name="fullname"
+            id="fullname"
+            value={ fullname }
+            onChange={ (ev) => setFullname(ev.target.value) }
+            min="6"
+            required
+            />
+          <Form.Label htmlFor="copies"> Número de cópias </Form.Label>
+          <Form.Control
+            type="number"
+            name="copies"
+            id="copies"
+            defaultValue="1"
+            value={ copies }
+            onChange={ (ev) => setCopies(ev.target.value) }
+             />
         </Form.Group>
-        <Form.Group>
+      </Form>
+        <Form
+        style={ { textAlign: 'center' } }
+        onSubmit={ (ev) => {
+          ev.preventDefault();
+          const { medName, appearance, quantity, usage } = ev.target;
+          const updatedMeds = medications;
+          updatedMeds.push({
+            name: medName.value,
+            appearance: appearance.value,
+            qtd: quantity.value,
+            usage: usage.value,
+          })
+          setMedications(updatedMeds);
+          console.log(medications);
+        } }
+        >
           <h3 style={ { margin: '20px' } } > Medicação </h3>
-          <Form.Label for="medicationName"> Nome da medicação </Form.Label>
-          <Form.Control type="text" name="medicationName" id="medicationName" placeholder="Escreva o nome da medicação aqui" required />
-          <Form.Label for="appearance" > Apresentação </Form.Label>
-          <Form.Control type="text" name="appearance" id="appearance" />
-          <Form.Label for="quantity"> Quantidade </Form.Label>
-          <Form.Control type="number" name="quantity" id="quantity" />
-          <Form.Label for="usage"> Modo de uso </Form.Label>
+          <Form.Group style={ {
+            display: 'flex',
+          }}>
+          <div style={ { width: '60%', marginRight: '5px' } }>
+          <Form.Label htmlFor="medName"> Nome da medicação </Form.Label>
+          <Form.Control
+            type="text"
+            name="medName"
+            id="medName"
+            required
+          />
+          </div>
+          <div>
+          <Form.Label
+            htmlFor="appearance"
+          >
+            Apresentação
+          </Form.Label>
+          <Form.Control type="text" name="appearance" id="appearance" required />
+          </div>
+          <div style={ { width: '15%', marginLeft: '5px' } }>
+          <Form.Label htmlFor="quantity"> Quantidade </Form.Label>
+          <Form.Control type="text" name="quantity" id="quantity" required />
+          </div>
+          </Form.Group>
+          <Form.Label
+           htmlFor="usage"
+           > Modo de uso </Form.Label>
           <Form.Control
             as="textarea"
             name="usage"
             id="usage"
             style={ { height: '100px' } }
+            required
           />
-          <Button> Gerar </Button>
-        </Form.Group>
-      </Form>
+          <Button type="submit"> Gerar </Button>
+        </Form>
+        <Button
+          variant="success"
+          type="button"
+          onClick={ () => generatePDF() }
+          > Gerar Prescrição </Button>
       </div>
     </>
   )
