@@ -55,7 +55,7 @@ export default function MedForm ({ medications, setMedications, setShow }) {
             required
           />
           <Form.Label htmlFor="quantity"> Observação </Form.Label>
-          <Form.Control type="text" name="obs" id="obs" required />
+          <Form.Control type="text" name="obs" id="obs" />
 
           <Button style={ { margin: '10px 0' } } type="submit"> Adicionar medicação </Button>
         </Form>
