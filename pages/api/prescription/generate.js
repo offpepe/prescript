@@ -5,12 +5,10 @@ import bold from 'pdfjs/font/Helvetica-Bold';
 import boldItalic from 'pdfjs/font/Times-BoldItalic';
 import timesBold from 'pdfjs/font/Times-Bold';
 
-// const recipesMOCK = 
 
 const generatePDF = async (req, res) => {
   try {
   const data = JSON.parse(req.body)
-  console.log(data);
   const { fullname, medications } = data;
   const headerIMG = new pdfJS.Image(fs.readFileSync('./static/brasão.jpg'));
   const secIMG = new pdfJS.Image(fs.readFileSync('./static/secIcon.jpeg'));
@@ -74,7 +72,7 @@ const generatePDF = async (req, res) => {
     .add('DATA', { underline: false });
 
     const output = await doc.asBuffer()
-    return res.status(200).send(output, () => doc.end());
+    return res.status(200).json(output, () => doc.end());
   } catch (err) { 
     res.status(500).send({ err: { code: 'internal_error', message: err.message  } });
   }
