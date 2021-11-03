@@ -1,7 +1,8 @@
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import Head from 'next/head'
+import Head from 'next/head';
 import MedForm from '../components/medForm';
 import MedCard from '../components/medCard';
+import Prescription from '../components/prescription';
 import { useState } from 'react';
 import { Form, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,6 +13,7 @@ export default function Home() {
   const [fullname, setFullname] = useState('');
   const [copies, setCopies] = useState(1);
   const [showMedsForm, setShow] = useState(false);
+  const [showPrescript, setShowPrescript] = useState(false);
 
   const generatePDF = async () => {
     const prescriptionData = {
@@ -19,11 +21,11 @@ export default function Home() {
       medications,
     }
 
-    const res = await fetch('http://localhost:3000/api/prescription/generate', {
+    await fetch('http://localhost:3000/api/prescription/generate', {
       method: 'POST',
       body: JSON.stringify(prescriptionData),
-    })
-    return res;
+    });
+    setShowPrescript(true);
   }
 
   const removeMed = (index) => {
@@ -82,8 +84,8 @@ export default function Home() {
           justifyContent: 'space-between',
           width: '70%',
         } }>
-        <h3 style={ { margin: '20px' } } > Medicação </h3>
-        <h3 onClick={ () => setShow(true) }><FontAwesomeIcon icon={ faPlusCircle } /> </h3>
+        <h4 style={ { margin: '20px 0' } } > Medicação </h4>
+        <h4 onClick={ () => setShow(true) }><FontAwesomeIcon icon={ faPlusCircle } /> </h4>
         </div>
         { medications && medications.map((med, index) => (
         <MedCard
@@ -100,6 +102,7 @@ export default function Home() {
          disabled={ medications.length === 0 && true }
           > Gerar Prescrição </Button> }
       </div>
+      <Prescription show={ showPrescript }  setShow={ setShowPrescript } />
     </>
   )
 }
