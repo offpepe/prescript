@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Modal } from 'react-bootstrap';
 import { Document, pdfjs, Page } from 'react-pdf';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,9 +10,14 @@ export default function Prescription ({ show, setShow }) {
     return (
       <>
       { show && (
-        <Modal show={ show }>
+        <Modal show={ show } backdropClassName >
         <Modal.Header closeButton onHide={ setShow }>
-        <a download="prescription.pdf" href='/api/prescription/get' ><FontAwesomeIcon icon={ faFileDownload } /></a>
+        <a
+          download="prescription.pdf"
+          href='http://localhost:3000/api/prescription/get'
+        >
+          <FontAwesomeIcon icon={ faFileDownload } />
+        </a>
         </Modal.Header>
         <Modal.Body style={ { 
           display: 'flex',
@@ -24,9 +30,23 @@ export default function Prescription ({ show, setShow }) {
           onLoadProgress={ () => console.log('loading') }
           onLoadSuccess={ () => console.log('it should works') }
         >
-        <Page pageNumber={ 1 } height={ 600 } />
+        <Page pageNumber={ 1 } height={ 700  } />
         </Document>    
         </Modal.Body>
+        <Modal.Footer style={ 
+          {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+          }
+         } >
+          <p style={ { 
+            fontSize: '12px',
+            fontStyle: 'italic',
+           } } >
+            obs: a escala do documento está reduzida, para ver em escala real, baixe-o
+          </p>
+        </Modal.Footer>
         </Modal>
       ) }
       </>
