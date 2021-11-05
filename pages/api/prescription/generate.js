@@ -15,7 +15,7 @@ const generatePDF = async (req, res) => {
   const recipeSymbol = new pdfJS.Image(fs.readFileSync('./static/Rx_symbol.jpg'));
     const doc = new pdfJS.Document({
         font,
-        padding: 10,
+        padding: 50,
     });
     
     doc.pipe(fs.createWriteStream('prescription.pdf'));
