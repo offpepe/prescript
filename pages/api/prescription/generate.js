@@ -24,14 +24,14 @@ const generatePDF = async (req, res) => {
     header.cell().text({ textAlign: 'center' })
     .add('Prefeitura Municipal de Água Fria', { textAlign: 'center' ,fontSize: 14, font: bold }).br()
     .add('SECRETARIA MUNICIPAL DE SAÚDE', { textAlign: 'center' ,fontSize: 12, font }).br()
-      .add('Rua Ruy Barbosa, 40 - Centro - CEP - 48170-000 - Água Fria - BA', { textAlign: 'center' ,fontSize: 9, font }).br()
-      .add('CNPJ: 13.900.292/0001-60', { textAlign: 'center' ,fontSize: 9, font: bold }).br();
-      header.cell({ paddingLeft: 0 }).image(secIMG,{ width: 90 });
-      doc.footer().text('Voltando a consulta, fineza trazer esta Receita', { 
-        textAlign: 'center',
-        font: boldItalic,
-        fontSize: 14,
-      });
+    .add('Rua Ruy Barbosa, 40 - Centro - CEP - 48170-000 - Água Fria - BA', { textAlign: 'center' ,fontSize: 9, font }).br()
+    .add('CNPJ: 13.900.292/0001-60', { textAlign: 'center' ,fontSize: 9, font: bold }).br();
+    header.cell({ paddingLeft: 0 }).image(secIMG,{ width: 90 });
+    doc.footer().text('Voltando a consulta, fineza trazer esta Receita', { 
+      textAlign: 'center',
+      font: boldItalic,
+      fontSize: 14,
+    });
       
 
     const body = doc.table({ widths: [90, null]}).row();
