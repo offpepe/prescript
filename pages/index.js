@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 export default function Home() {
-  const [medications, setMedications] = useState([])
+  const [medications, setMedications] = useState([]);
   const [fullname, setFullname] = useState('');
   const [copies, setCopies] = useState(1);
   const [showMedsForm, setShow] = useState(false);
@@ -19,7 +19,7 @@ export default function Home() {
     const prescriptionData = {
       fullname,
       medications,
-    }
+    };
 
     await fetch('http://localhost:3000/api/prescription/generate', {
       method: 'POST',
@@ -47,7 +47,8 @@ export default function Home() {
         }} >
         <h1> Gerador de prescrição </h1>
       <Form style={ { width: '70%' } } >
-        <Form.Group>
+        <Form.Group style={ { display: 'flex', alignItems: 'center' } } >
+          <div style={ { margin: '0 10px 0 0'  , width: '88%' } }>
           <Form.Label htmlFor="name"> Nome completo </Form.Label>
           <Form.Control
             type="text"
@@ -58,15 +59,17 @@ export default function Home() {
             min="6"
             required
             />
-          <Form.Label htmlFor="copies"> Número de cópias </Form.Label>
+          </div>
+          <div style={ { width: '12%' } }>
+          <Form.Label htmlFor="copies"> Nº de cópias </Form.Label>
           <Form.Control
             type="number"
             name="copies"
             id="copies"
-            defaultValue="1"
             value={ copies }
             onChange={ (ev) => setCopies(ev.target.value) }
              />
+          </div>
         </Form.Group>
       </Form>
       { showMedsForm ? (
