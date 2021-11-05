@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileDownload } from '@fortawesome/free-solid-svg-icons';
 
 
-export default function Prescription ({ show, setShow }) {
+export default function Prescription ({ show, setShow, copie }) {
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
     return (
       <>
@@ -13,7 +13,12 @@ export default function Prescription ({ show, setShow }) {
           show={ show }
         >
         <Modal.Header closeButton onHide={ setShow }>
-        <a download="prescription.pdf" href='http://localhost:3000/api/prescription/get' ><FontAwesomeIcon icon={ faFileDownload } /></a>
+        <a
+          download="prescription.pdf"
+          href={ copie ? "http://localhost:3000/api/prescription/generateCopies" : "http://localhost:3000/api/prescription/get" }
+          >
+            <FontAwesomeIcon icon={ faFileDownload } />
+          </a>
         </Modal.Header>
         <Modal.Body style={ { 
           display: 'flex',
