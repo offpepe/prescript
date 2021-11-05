@@ -3,7 +3,7 @@ import { Form, Button } from 'react-bootstrap'
 export default function MedForm ({ medications, setMedications, setShow }) {
     return (
     <Form
-        style={ { textAlign: 'center', margin: '30px 0' } }
+        style={ { margin: '30px 0', width: '70%' } }
         onSubmit={ (ev) => {
           ev.preventDefault();
           const { medName, appearance, quantity, usage, obs } = ev.target;
