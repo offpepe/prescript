@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import Link from 'next/link';
 import { Modal } from 'react-bootstrap';
 import { Document, pdfjs, Page } from 'react-pdf';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,30 +10,38 @@ export default function Prescription ({ show, setShow, copie, fullName }) {
   const fName = fullName.split(' ').join('_');
   const date = new Date().toLocaleDateString('en-US');
   const hash = crypto.createHash('md5').update(fName).digest('base64');
-  const pdf = (copie ? "http://localhost:3000/api/prescription/generateCopie" : "http://localhost:3000/api/prescription/get");
+  const pdf = (copie ? 'http://localhost:3000/api/prescription/generateCopie' : 'http://localhost:3000/api/prescription/get');
     return (
       <>
       { show && (
         <Modal
           show={ show }
         >
-        <Modal.Header closeButton onHide={ setShow }>
+        <Modal.Header closeButton onHide={ setShow } >
+        <div style={ {
+          alignItems: 'center',
+          display: 'flex',
+          fontSize: '24px',
+          justifyContent: 'space-around',
+          width: '20%'
+        } }>
         <a
           download={`Prescrição_${fName}_${date}_${hash}.pdf`}
           href={ pdf }
           >
           <FontAwesomeIcon icon={ faFileDownload } />
         </a>
-        <a href="" onClick={ (ev) => {
-          ev.preventDefault();
-          window.open('/prescriptionView', 'PRINT');
-        } } >​​<FontAwesomeIcon icon={ faPrint   } /></a>
+        <Link href={ copie ? "/prescriptionView?copie=true" : "/prescriptionView" }  >
+          <a target="_blank" rel="noreferrer" >​
+            <FontAwesomeIcon icon={ faPrint } />
+          </a>
+        </Link>
+        </div>
         </Modal.Header>
         <Modal.Body style={ { 
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          overfloX: 'hidden',
         } }>
         <Document
           file='/api/prescription/get'
