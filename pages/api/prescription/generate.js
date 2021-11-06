@@ -16,7 +16,7 @@ const generatePDF = async (req, res) => {
         padding: 50,
     });
     
-    doc.pipe(fs.createWriteStream('prescription.pdf'));
+    doc.pipe(fs.createWriteStream('./public/generated/prescription.pdf'));
     const header = doc.header().table({ widths: [90, 300, 90], paddingTop: 30, paddingLeft: 30 }).row({ alignment: 'center' });
     header.cell().image(headerIMG, { width: 90 });
     header.cell().text({ textAlign: 'center' })
