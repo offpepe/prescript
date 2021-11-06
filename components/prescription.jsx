@@ -5,8 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileDownload } from '@fortawesome/free-solid-svg-icons';
 
 
-export default function Prescription ({ show, setShow, copie }) {
+export default function Prescription ({ show, setShow, copie, fullName }) {
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+  const fName = fullName.split(' ')[0];
+  const date = new Date().toLocaleDateString('pt-BR')
     return (
       <>
       { show && (
@@ -15,8 +17,8 @@ export default function Prescription ({ show, setShow, copie }) {
         >
         <Modal.Header closeButton onHide={ setShow }>
         <a
-          download="prescription.pdf"
-          href={ copie ? "http://localhost:3000/api/prescription/generateCopies" : "http://localhost:3000/api/prescription/get" }
+          download={`Prescrição_${fName}_${date}.pdf`}
+          href={ copie ? "http://localhost:3000/api/prescription/generateCopie" : "http://localhost:3000/api/prescription/get" }
           >
             <FontAwesomeIcon icon={ faFileDownload } />
           </a>
