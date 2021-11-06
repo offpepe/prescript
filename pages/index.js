@@ -91,7 +91,7 @@ export default function Home() {
           width: '70%',
         } }>
         <h4 style={ { margin: '20px 0' } } > Medicação </h4>
-        <h4 onClick={ () => setShow(true) }><FontAwesomeIcon icon={ faPlusCircle } /> </h4>
+        <h4 onClick={ () => setShow(true) }> Adicionar Receita   <FontAwesomeIcon icon={ faPlusCircle } /> </h4>
         </div>
         { medications && medications.map((med, index) => (
         <MedCard
@@ -108,7 +108,12 @@ export default function Home() {
           disabled={ medications.length === 0 && true }
           > Gerar Prescrição </Button> }
       </div>
-      <Prescription show={ showPrescript }  setShow={ setShowPrescript } copie={ copie } />
+      <Prescription
+        show={ showPrescript }
+        setShow={ setShowPrescript }
+        copie={ copie }
+        fullName={ fullname }
+      />
     </>
   )
 }
