@@ -1,14 +1,15 @@
-import Link from 'next/link';
+import crypto from 'crypto';
 import { Modal } from 'react-bootstrap';
 import { Document, pdfjs, Page } from 'react-pdf';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFileDownload } from '@fortawesome/free-solid-svg-icons';
-
+import { faFileDownload, faPrint } from '@fortawesome/free-solid-svg-icons';
 
 export default function Prescription ({ show, setShow, copie, fullName }) {
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-  const fName = fullName.split(' ')[0];
-  const date = new Date().toLocaleDateString('pt-BR')
+  const fName = fullName.split(' ').join('_');
+  const date = new Date().toLocaleDateString('en-US');
+  const hash = crypto.createHash('md5').update(fName).digest('base64');
+  const pdf = (copie ? "http://localhost:3000/api/prescription/generateCopie" : "http://localhost:3000/api/prescription/get");
     return (
       <>
       { show && (
@@ -17,11 +18,15 @@ export default function Prescription ({ show, setShow, copie, fullName }) {
         >
         <Modal.Header closeButton onHide={ setShow }>
         <a
-          download={`Prescrição_${fName}_${date}.pdf`}
-          href={ copie ? "http://localhost:3000/api/prescription/generateCopie" : "http://localhost:3000/api/prescription/get" }
+          download={`Prescrição_${fName}_${date}_${hash}.pdf`}
+          href={ pdf }
           >
-            <FontAwesomeIcon icon={ faFileDownload } />
-          </a>
+          <FontAwesomeIcon icon={ faFileDownload } />
+        </a>
+        <a href="" onClick={ (ev) => {
+          ev.preventDefault();
+          window.open('/prescriptionView', 'PRINT');
+        } } >​​<FontAwesomeIcon icon={ faPrint   } /></a>
         </Modal.Header>
         <Modal.Body style={ { 
           display: 'flex',
