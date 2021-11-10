@@ -1,3 +1,4 @@
+import style from '../styles/Home.module.css';
 import { Card } from "react-bootstrap";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,12 +13,8 @@ export default function MedCard ({
     removeMed,
  }) {
     return (
-        <Card style={ { width: '60%', height: '50px', margin: '6px 0' } }>
-            <Card.Body style={ {
-                alignItems: 'flex-start', 
-                display: 'flex',
-                justifyContent: 'space-between',
-                } } >
+        <Card className={ style.medCard }>
+            <Card.Body className={ style.medCardBody } >
                 <div style={ { width: '70%' } } >
                     <p>{ `${ name } ${ appearance && appearance}`}</p>
                 </div>

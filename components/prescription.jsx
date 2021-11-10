@@ -1,3 +1,4 @@
+import style from '../styles/Home.module.css';
 import crypto from 'crypto';
 import Link from 'next/link';
 import { Modal } from 'react-bootstrap';
@@ -18,13 +19,7 @@ export default function Prescription ({ show, setShow, copie, fullName }) {
           show={ show }
         >
         <Modal.Header closeButton onHide={ setShow } >
-        <div style={ {
-          alignItems: 'center',
-          display: 'flex',
-          fontSize: '24px',
-          justifyContent: 'space-around',
-          width: '20%'
-        } }>
+        <div className={ style.prescriptionPreviewHeader } >
         <a
           download={`Prescrição_${fName}_${date}_${hash}.pdf`}
           href={ pdf }
@@ -38,11 +33,7 @@ export default function Prescription ({ show, setShow, copie, fullName }) {
         </Link>
         </div>
         </Modal.Header>
-        <Modal.Body style={ { 
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        } }>
+        <Modal.Body className={ style.prescriptionPreviewBody }>
         <Document
           file='/api/prescription/get'
           onLoadError={ (err) => console.log(err)}
@@ -52,17 +43,8 @@ export default function Prescription ({ show, setShow, copie, fullName }) {
         <Page pageNumber={ 1 } height={ 700 } />
         </Document>    
         </Modal.Body>
-        <Modal.Footer style={ 
-          {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-          }
-         } >
-          <p style={ { 
-            fontSize: '12px',
-            fontStyle: 'italic',
-           } } >
+        <Modal.Footer className={ style.prescriptionPreviewFooter }>
+          <p>
             obs: a escala do documento está reduzida, para ver em escala real, baixe-o
           </p>
         </Modal.Footer>

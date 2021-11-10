@@ -1,9 +1,10 @@
+import style from '../styles/Home.module.css';
 import { Form, Button } from 'react-bootstrap'
 
 export default function MedForm ({ medications, setMedications, setShow }) {
     return (
     <Form
-        style={ { margin: '30px 0', width: '70%' } }
+        className={ style.medForm }
         onSubmit={ (ev) => {
           ev.preventDefault();
           const { medName, appearance, quantity, usage, obs } = ev.target;
@@ -19,10 +20,8 @@ export default function MedForm ({ medications, setMedications, setShow }) {
           setShow(false);
         } }
         >
-          <Form.Group style={ {
-            display: 'flex',
-          }}>
-          <div style={ { width: '70%', marginRight: '5px' } }>
+          <Form.Group className={ style.medFormGroup }>
+          <div className={ style.formRow } >
           <Form.Label htmlFor="medName"> Nome da medicação* </Form.Label>
           <Form.Control
             type="text"
@@ -56,8 +55,10 @@ export default function MedForm ({ medications, setMedications, setShow }) {
           />
           <Form.Label htmlFor="quantity"> Observação </Form.Label>
           <Form.Control type="text" name="obs" id="obs" />
-
-          <Button style={ { margin: '10px 0' } } type="submit"> Adicionar medicação </Button>
+          <div className={ style.btnConteiner }>
+            <Button variant="secondary" type="submit"> Adicionar medicação </Button>
+            <Button variant="danger" onClick={ () => setShow(false) } type="button"> Cancelar </Button>
+          </div>
         </Form>
     )
 }
