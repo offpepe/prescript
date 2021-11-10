@@ -1,116 +1,36 @@
-.container {
-  padding: 0 2rem;
-}
+.mainConteiner { align-items: center; display: flex; flex-direction: column; justify-content: center; padding-top: 30px; }
 
-.main {
-  min-height: 100vh;
-  padding: 4rem 0;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+.mainConteiner form { width: 70%; }
 
-.footer {
-  display: flex;
-  flex: 1;
-  padding: 2rem 0;
-  border-top: 1px solid #eaeaea;
-  justify-content: center;
-  align-items: center;
-}
+.copiesBtn { display: flex; align-items: flex-start; margin: 10px 0; }
 
-.footer a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-}
+.copiesBtn label { margin-right: 10px; }
 
-.title a {
-  color: #0070f3;
-  text-decoration: none;
-}
+.addMedBtn { align-items: center; display: flex; justify-content: space-between; width: 70%; }
 
-.title a:hover,
-.title a:focus,
-.title a:active {
-  text-decoration: underline;
-}
+.addMedBtn h4 { margin: 20px 0; }
 
-.title {
-  margin: 0;
-  line-height: 1.15;
-  font-size: 4rem;
-}
+.addMedBtn button { border-radius: 12px; }
 
-.title,
-.description {
-  text-align: center;
-}
+.medForm { margin: 30px 0; }
 
-.description {
-  margin: 4rem 0;
-  line-height: 1.5;
-  font-size: 1.5rem;
-}
+.medFormGroup { display: flex; }
 
-.code {
-  background: #fafafa;
-  border-radius: 5px;
-  padding: 0.75rem;
-  font-size: 1.1rem;
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
-}
+.formRow { width: 70%; margin-right: 5px; }
 
-.grid {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  max-width: 800px;
-}
+.btnConteiner { margin: 10px 0; }
 
-.card {
-  margin: 1rem;
-  padding: 1.5rem;
-  text-align: left;
-  color: inherit;
-  text-decoration: none;
-  border: 1px solid #eaeaea;
-  border-radius: 10px;
-  transition: color 0.15s ease, border-color 0.15s ease;
-  max-width: 300px;
-}
+.btnConteiner button { margin-right: 10px; }
 
-.card:hover,
-.card:focus,
-.card:active {
-  color: #0070f3;
-  border-color: #0070f3;
-}
+.medCard  { width: 60%; height: 50px; margin: 6px 0; }
 
-.card h2 {
-  margin: 0 0 1rem 0;
-  font-size: 1.5rem;
-}
+.medCardBody { align-items: flex-start; display: flex; justify-content: space-between; }
 
-.card p {
-  margin: 0;
-  font-size: 1.25rem;
-  line-height: 1.5;
-}
+.prescriptionPreviewHeader { align-items: center; display: flex; font-size: 24px; justify-content: space-around; width: 20%; }
 
-.logo {
-  height: 1em;
-  margin-left: 0.5rem;
-}
+.prescriptionPreviewBody { display: flex; align-items: center; justify-content: center; }
 
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
-  }
-}
+.prescriptionPreviewFooter { display: flex; align-items: center; justify-content: flex-start; }
+
+.prescriptionPreviewFooter p { font-size: 12px; font-style: italic; }
+
