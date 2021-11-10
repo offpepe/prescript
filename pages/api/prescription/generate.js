@@ -13,6 +13,7 @@ const generatePDF = async (req, res) => {
   const recipeSymbol = new pdfJS.Image(fs.readFileSync('./static/Rx_symbol.jpg'));
     const doc = new pdfJS.Document({
         font: roboto,
+        author: 'Filipe Lopes', 
         padding: 50,
     });
     
@@ -42,14 +43,27 @@ const generatePDF = async (req, res) => {
       paddingLeft: 30,
       paddingTop: 145,
     }).text(`PARA: \n ${fullname}`);
-
+    
+    const generateDots = (value, postDots) => {
+      let limit = 0;
+      let dots = '';
+      if (limit > postDots) {
+        limit = (50 + postDots);
+      } else {
+        limit = (50 + limit);
+      }
+      while (limit !== 0) {
+        dots += '.';
+        limit -= 1;
+      }
+      return dots;
+    }
 
     const addRecipe = (name, qtd, apparence, usage, obs) => {
-      const recipeCard = doc.table({ widths: [215, 150, 150], paddingLeft: 30, paddingTop: 20, fontSize: 14 });
+      const recipeCard = doc.table({ widths: [545], paddingLeft: 30, paddingTop: 20, fontSize: 14 });
+      const dots = generateDots((name.length - apparence.length), qtd.length);
       const recipeCardHeader = recipeCard.header()
-      recipeCardHeader.cell().text(`${name} ${ apparence && apparence }`);
-      recipeCardHeader.cell().text('----------------', { textAlign: 'justify' });
-      recipeCardHeader.cell().text(qtd, { textAlign: 'left' });
+      recipeCardHeader.cell().text(`${name} ${ apparence && apparence } ${dots} ${qtd} `);
       const recipeCardBody = doc.table({ widths: [500], paddingLeft: 30, paddingTop: 2, fontSize: 14 }).row();
       recipeCardBody.cell().text(`USO: ${usage}`, { textAlign: 'justify' }).br().br()
       .add((obs ? obs : ''), { font: roboto });
