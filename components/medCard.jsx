@@ -18,12 +18,17 @@ export default function MedCard ({
                 display: 'flex',
                 justifyContent: 'space-between',
                 } } >
-                <p>{ `${ name } ${ appearance && appearance}`}</p>
-                <p>{ qtd }</p>
+                <div style={ { width: '70%' } } >
+                    <p>{ `${ name } ${ appearance && appearance}`}</p>
+                </div>
+                <div style={ { width: '30%' } } >
+                    <p>{ qtd }</p>
+                </div>
                 <FontAwesomeIcon
                   icon={ faTimesCircle }
                   style={ { fontSize: 20, color: 'red' } }
                   onClick= { () => removeMed(id) }
+                  width="10%"
                   />
 
             </Card.Body>
