@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import style from "../styles/Home.module.css";
 import crypto from "crypto";
 import Link from "next/link";
-import { Modal } from "react-bootstrap";
+import { Modal, Spinner } from "react-bootstrap";
 import { Document, pdfjs, Page } from "react-pdf";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileDownload, faPrint } from "@fortawesome/free-solid-svg-icons";
@@ -41,9 +42,9 @@ export default function Prescription({ show, setShow, copie, fullName }) {
           <Modal.Body className={style.prescriptionPreviewBody}>
             <Document
               file="/api/prescription/get"
-              onLoadError={(err) => console.log(err)}
-              onLoadProgress={() => console.log("loading")}
-              onLoadSuccess={() => console.log("it should works")}
+              error={ (err) => alert(err.message) }           
+              loading={ <Spinner animation="grow" /> }
+
             >
               <Page pageNumber={1} height={700} />
             </Document>
