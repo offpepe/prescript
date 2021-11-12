@@ -30,7 +30,7 @@ export default function Home() {
       medications,
     };
     setLoading(true)
-    await fetch("http://localhost:3000/api/prescription/generate", {
+    await fetch(`${process.env.APP}/api/prescription/generate`, {
       method: "POST",
       body: JSON.stringify(prescriptionData),
     });

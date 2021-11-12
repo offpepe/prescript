@@ -13,8 +13,8 @@ export default function Prescription({ show, setShow, copie, fullName }) {
   const date = new Date().toLocaleDateString("en-US");
   const hash = crypto.createHash("md5").update(fName).digest("base64");
   const pdf = copie
-    ? "http://localhost:3000/api/prescription/generateCopie"
-    : "http://localhost:3000/api/prescription/get";
+    ? `${process.env.APP}/api/prescription/generateCopie`
+    : `${process.env.APP}/api/prescription/get`;
   return (
     <>
       {show && (
