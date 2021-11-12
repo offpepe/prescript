@@ -8,10 +8,11 @@ export default function MedCard({
   id,
   removeMed,
 }) {
+  const fontSize = `${name} ${appearance && appearance}`.length > 50 ? '12px' : '18px';
   return (
     <Card className={style.medCard}>
       <Card.Body className={style.medCardBody}>
-        <div style={{ width: "70%" }}>
+        <div style={{ width: "70%", fontSize }}>
           <p>{`${name} ${appearance && appearance}`}</p>
         </div>
         <div style={{ width: "30%" }}>
