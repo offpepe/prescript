@@ -1,9 +1,9 @@
-import { Html, Head, Main, NextScript } from 'next/document'
+import { Html, Head, Main, NextScript } from "next/document";
 
 const Document = () => (
-<>
+  <>
     <Html>
-        <Head>
+      <Head>
         <meta name="description" content="Medical prescription generator" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -12,7 +12,7 @@ const Document = () => (
       <Main />
       <NextScript />
     </body>
-</>
-)
+  </>
+);
 
 export default Document;
