@@ -104,11 +104,11 @@ export default function Home() {
           <Button
             variant="success"
             type="button"
+            style={ { margin: '20px 0' } }
             onClick={() => generatePDF()}
             disabled={medications.length === 0 && true}
           >
-            {" "}
-            Gerar Prescrição{" "}
+            Gerar Prescrição
           </Button>
         )}
       </main>
