@@ -5,7 +5,7 @@ import MedForm from "../components/medForm";
 import MedCard from "../components/medCard";
 import Prescription from "../components/prescription";
 import { useEffect, useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Spinner } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
@@ -15,6 +15,7 @@ export default function Home() {
   const [copie, setCopie] = useState(true);
   const [showMedsForm, setShow] = useState(false);
   const [showPrescript, setShowPrescript] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     document.addEventListener(
@@ -28,11 +29,12 @@ export default function Home() {
       fullname,
       medications,
     };
-
+    setLoading(true)
     await fetch("http://localhost:3000/api/prescription/generate", {
       method: "POST",
       body: JSON.stringify(prescriptionData),
     });
+    setLoading(false)
     setShowPrescript(true);
   };
 
@@ -108,7 +110,7 @@ export default function Home() {
             onClick={() => generatePDF()}
             disabled={medications.length === 0 && true}
           >
-            Gerar Prescrição
+            { loading ?  <Spinner as="span" size="sm" role="status" aria-hidden="true" animation="border" /> : 'Gerar Prescrição' }
           </Button>
         )}
       </main>
