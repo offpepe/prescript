@@ -17,7 +17,7 @@ const generatePDF = async (req, res) => {
     const droidMono = new pdfJS.Font(
       fs.readFileSync("./public/fonts/droid-sans-mono.regular.ttf")
     );
-    const headerIMG = new pdfJS.Image(fs.readFileSync("./public/brasão.jpg"));
+    const headerIMG = new pdfJS.Image(fs.readFileSync("./public/brasao.jpg"));
     const secIMG = new pdfJS.Image(fs.readFileSync("./public/secIcon.jpeg"));
     const recipeSymbol = new pdfJS.Image(
       fs.readFileSync("./public/Rx_symbol.jpg")
