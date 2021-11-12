@@ -17,10 +17,10 @@ const generatePDF = async (req, res) => {
     const droidMono = new pdfJS.Font(
       fs.readFileSync("./public/fonts/droid-sans-mono.regular.ttf")
     );
-    const headerIMG = new pdfJS.Image(fs.readFileSync("./static/brasão.jpg"));
-    const secIMG = new pdfJS.Image(fs.readFileSync("./static/secIcon.jpeg"));
+    const headerIMG = new pdfJS.Image(fs.readFileSync("./public/brasão.jpg"));
+    const secIMG = new pdfJS.Image(fs.readFileSync("./public/secIcon.jpeg"));
     const recipeSymbol = new pdfJS.Image(
-      fs.readFileSync("./static/Rx_symbol.jpg")
+      fs.readFileSync("./public/Rx_symbol.jpg")
     );
     const doc = new pdfJS.Document({
       font: roboto,
