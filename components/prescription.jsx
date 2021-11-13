@@ -7,7 +7,7 @@ import { Document, pdfjs, Page } from "react-pdf";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileDownload, faPrint } from "@fortawesome/free-solid-svg-icons";
 
-export default function Prescription({ show, setShow, copie, fullName }) {
+export default function Prescription({ show, setShow, copie, fullName, pdf: pdfProp }) {
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
   const fName = fullName.split(" ").join("_");
   const date = new Date().toLocaleDateString("en-US");
@@ -23,7 +23,8 @@ export default function Prescription({ show, setShow, copie, fullName }) {
             <div className={style.prescriptionPreviewHeader}>
               <a
                 download={`Prescrição_${fName}_${date}_${hash}.pdf`}
-                href={pdf}
+                href={ pdfProp }
+
               >
                 <FontAwesomeIcon icon={faFileDownload} />
               </a>
@@ -41,7 +42,7 @@ export default function Prescription({ show, setShow, copie, fullName }) {
           </Modal.Header>
           <Modal.Body className={style.prescriptionPreviewBody}>
             <Document
-              file="/api/prescription/get"
+              file={ pdfProp }
               error={ (err) => alert(err.message) }           
               loading={ <Spinner animation="grow" /> }
 

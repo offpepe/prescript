@@ -11,7 +11,8 @@ import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 export default function Home() {
   const [medications, setMedications] = useState([]);
-  const [fullname, setFullname] = useState("");
+  const [fullname, setFullname] = useState('');
+  const [pdf, setPDF] = useState([]);
   const [copie, setCopie] = useState(true);
   const [showMedsForm, setShow] = useState(false);
   const [showPrescript, setShowPrescript] = useState(false);
@@ -30,10 +31,12 @@ export default function Home() {
       medications,
     };
     setLoading(true)
-    await fetch(`${process.env.APP}/api/prescription/generate`, {
+    const rawRes = await fetch(`http://localhost:3000/api/prescription/generate`, {
       method: "POST",
       body: JSON.stringify(prescriptionData),
     });
+    const res = (await rawRes.body.getReader().read()).value.buffer;
+    setPDF(res);
     setLoading(false)
     setShowPrescript(true);
   };
@@ -119,6 +122,7 @@ export default function Home() {
         setShow={setShowPrescript}
         copie={copie}
         fullName={fullname}
+        pdf={ pdf }
       />
     </>
   );
