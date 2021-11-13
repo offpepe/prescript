@@ -161,7 +161,6 @@ const generatePDF = async (req, res) => {
       .add("DATA", { underline: false });
 
     const output = await doc.asBuffer();
-    fs.writeFileSync('./public/generated/prescription.pdf', output);
     return res.status(200).send(output);
   } catch (err) {
     const message = { err: { code: "internal_error", message: err.message } };

@@ -31,12 +31,11 @@ export default function Home() {
       medications,
     };
     setLoading(true);
-    const rawRes = await fetch('/api/prescription/generate', {
+    const rawRes = await fetch(`/api/prescription/generate`, {
       method: "POST",
       body: JSON.stringify(prescriptionData),
     });
     const res = (await rawRes.body.getReader().read()).value.buffer;
-    console.log(res);
     setPDF(res);
     setLoading(false)
     setShowPrescript(true);
