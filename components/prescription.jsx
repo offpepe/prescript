@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import style from "../styles/Home.module.css";
 import crypto from "crypto";
 import Link from "next/link";
@@ -7,7 +6,7 @@ import { Document, pdfjs, Page } from "react-pdf";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileDownload, faPrint } from "@fortawesome/free-solid-svg-icons";
 
-export default function Prescription({ show, setShow, copie, fullName, pdf: pdfProp }) {
+export default function Prescription({ show, setShow, copie, fullName }) {
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
   const fName = fullName.split(" ").join("_");
   const date = new Date().toLocaleDateString("en-US");
@@ -42,7 +41,6 @@ export default function Prescription({ show, setShow, copie, fullName, pdf: pdfP
           <Modal.Body className={style.prescriptionPreviewBody}>
             <Document
               file={ '/api/prescription/get' }
-              error={ (err) => alert(err.message) }           
               loading={ <Spinner animation="grow" /> }
 
             >
