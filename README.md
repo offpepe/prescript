@@ -1,4 +1,5 @@
 # Welcome to Prescript 👋
+![version-shield](https://img.shields.io/badge/version-2.0.0-informational);
 
 
 ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white) 
