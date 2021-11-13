@@ -30,12 +30,13 @@ export default function Home() {
       fullname,
       medications,
     };
-    setLoading(true)
-    const rawRes = await fetch(`http://localhost:3000/api/prescription/generate`, {
+    setLoading(true);
+    const rawRes = await fetch('/api/prescription/generate', {
       method: "POST",
       body: JSON.stringify(prescriptionData),
     });
     const res = (await rawRes.body.getReader().read()).value.buffer;
+    console.log(res);
     setPDF(res);
     setLoading(false)
     setShowPrescript(true);

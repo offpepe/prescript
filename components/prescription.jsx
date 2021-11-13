@@ -13,8 +13,8 @@ export default function Prescription({ show, setShow, copie, fullName, pdf: pdfP
   const date = new Date().toLocaleDateString("en-US");
   const hash = crypto.createHash("md5").update(fName).digest("base64");
   const pdf = copie
-    ? `${process.env.APP}/api/prescription/generateCopie`
-    : `${process.env.APP}/api/prescription/get`;
+    ? '/api/prescription/generateCopie'
+    : '/api/prescription/get';
   return (
     <>
       {show && (
@@ -23,7 +23,7 @@ export default function Prescription({ show, setShow, copie, fullName, pdf: pdfP
             <div className={style.prescriptionPreviewHeader}>
               <a
                 download={`Prescrição_${fName}_${date}_${hash}.pdf`}
-                href={ pdfProp }
+                href={ pdf }
 
               >
                 <FontAwesomeIcon icon={faFileDownload} />
