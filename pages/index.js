@@ -17,7 +17,7 @@ export default function Home() {
   const [showMedsForm, setShow] = useState(false);
   const [showPrescript, setShowPrescript] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  
   useEffect(() => {
     document.addEventListener(
       "keyup",
@@ -36,7 +36,7 @@ export default function Home() {
       body: JSON.stringify(prescriptionData),
     });
     const res = (await rawRes.body.getReader().read()).value.buffer;
-    console.log(res)
+    alert(JSON.stringify(res));
     setPDF(res);
     setLoading(false)
     setShowPrescript(true);
