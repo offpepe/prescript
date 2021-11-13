@@ -10,7 +10,7 @@ export default function Prescription({ show, setShow, copie, fullName }) {
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
   const fName = fullName.split(" ").join("_");
   const date = new Date().toLocaleDateString("en-US");
-  const hash = crypto.createHash("md5").update(fName).digest("base64");
+  const hash = crypto.createHash("md5").update(fName).digest('hex');
   const pdf = copie
     ? '/api/prescription/generateCopie'
     : '/api/prescription/get';
