@@ -24,7 +24,6 @@ export default function Prescription({ show, setShow, copie, fullName, pdf: pdfP
               <a
                 download={`Prescrição_${fName}_${date}_${hash}.pdf`}
                 href={ pdf }
-
               >
                 <FontAwesomeIcon icon={faFileDownload} />
               </a>
@@ -42,7 +41,7 @@ export default function Prescription({ show, setShow, copie, fullName, pdf: pdfP
           </Modal.Header>
           <Modal.Body className={style.prescriptionPreviewBody}>
             <Document
-              file={ pdfProp }
+              file={ '/api/prescription/get' }
               error={ (err) => alert(err.message) }           
               loading={ <Spinner animation="grow" /> }
 
