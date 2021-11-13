@@ -40,8 +40,8 @@ export default function Prescription({ show, setShow, copie, fullName, pdf: pdfP
           </Modal.Header>
           <Modal.Body className={style.prescriptionPreviewBody}>
             <Document
-              file={ pdfProp }
-              error={ (err) => alert(err.message) }           
+              file={ pdfProp && pdfProp }
+              onLoadError={ () => alert('Error Loading PDF') }           
               loading={ <Spinner animation="grow" /> }
 
             >
