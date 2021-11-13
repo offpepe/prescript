@@ -28,7 +28,6 @@ const generatePDF = async (req, res) => {
       padding: 12,
     });
 
-    doc.pipe(fs.createWriteStream("./public/generated/prescription.pdf"));
     const header = doc
       .header()
       .table({ widths: [90, 300, 90], paddingTop: 30, paddingLeft: 50 })
@@ -162,7 +161,8 @@ const generatePDF = async (req, res) => {
       .add("DATA", { underline: false });
 
     const output = await doc.asBuffer();
-    return res.status(200).json(output, () => doc.end());
+    fs.writeFileSync('./public/generated/prescription.pdf', output);
+    return res.status(200).send(output);
   } catch (err) {
     const message = { err: { code: "internal_error", message: err.message } };
     console.log(message);
