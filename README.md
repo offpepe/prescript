@@ -25,7 +25,7 @@ npm run dev
 * Website: https://offpepe.github.io/portfolio
 * Twitter: [@Offplayer\_G](https://twitter.com/Offplayer\_G)
 * Github: [@offpepe](https://github.com/offpepe)
-* LinkedIn: [@Alan Albuquerque F Lopes](https://linkedin.com/in/Alan Albuquerque F Lopes)
+* LinkedIn: [@Alan Albuquerque F Lopes](https://linkedin.com/in/alanalbuquerq)
 
 ## Show your support
 
