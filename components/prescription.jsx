@@ -23,7 +23,6 @@ export default function Prescription({ show, setShow, copie, fullName, pdf: pdfP
             <div className={style.prescriptionPreviewHeader}>
               <a
                 download={`Prescrição_${fName}_${date}_${hash}.pdf`}
-                href={ pdf }
               >
                 <FontAwesomeIcon icon={faFileDownload} />
               </a>
