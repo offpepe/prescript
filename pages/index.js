@@ -35,7 +35,7 @@ export default function Home() {
       method: "POST",
       body: JSON.stringify(prescriptionData),
     });
-    const res = (await rawRes.body.getReader().read()).value.buffer;
+    const res = (await rawRes.body.getReader().read()).value;
     setPDF(res);
     setLoading(false)
     setShowPrescript(true);

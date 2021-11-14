@@ -5,12 +5,27 @@
   import { Document, pdfjs, Page } from "react-pdf";
   import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
   import { faFileDownload, faPrint } from "@fortawesome/free-solid-svg-icons";
+import { useEffect } from "react";
 
-  export default function Prescription({ show, setShow, copie, fullName }) {
+  export default function Prescription({ show, setShow, copie, fullName, pdf: pdfProp }) {
+    useEffect(() => {
+      const gC = async () => {
+        const bufferPdf = await (new Blob([pdfProp.buffer], { type: 'application/pdf' })).arrayBuffer()
+        const cop = await fetch('/api/prescription/generateCopie', {
+          method: 'POST',
+          headers: new Headers().set('Content-Type', 'application/pdf'),
+          body: bufferPdf,
+        });
+        const res = await cop.json();
+        console.log(res); 
+      }
+      gC();
+    }, [pdfProp]);
     pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
     const fName = fullName.split(" ").join("_");
     const date = new Date().toLocaleDateString("en-US");
     const hash = crypto.createHash("md5").update(fName).digest('hex');
+
     const pdf = copie
       ? '/api/prescription/generateCopie'
       : '/api/prescription/get';
@@ -22,7 +37,7 @@
               <div className={style.prescriptionPreviewHeader}>
                 <a
                   download={`Prescrição_${fName}_${date}_${hash}.pdf`}
-                  href={ pdf }
+                  href={ URL.createObjectURL(new Blob([pdfProp.buffer], { type: 'application/pdf' })) }
                 >
                   <FontAwesomeIcon icon={faFileDownload} />
                 </a>
@@ -40,7 +55,7 @@
             </Modal.Header>
             <Modal.Body className={style.prescriptionPreviewBody}>
               <Document
-                file={ '/api/prescription/get' }
+                file={ pdfProp.buffer}
                 loading={ <Spinner animation="grow" /> }
 
               >
