@@ -5,22 +5,29 @@
   import { Document, pdfjs, Page } from "react-pdf";
   import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
   import { faFileDownload, faPrint } from "@fortawesome/free-solid-svg-icons";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
   export default function Prescription({ show, setShow, copie, fullName, pdf: pdfProp }) {
+    const [pdfLink, setPdfLink] = useState('')
     useEffect(() => {
       const gC = async () => {
-        const bufferPdf = await (new Blob([pdfProp.buffer], { type: 'application/pdf' })).arrayBuffer()
-        const cop = await fetch('/api/prescription/generateCopie', {
+        const bufferPdf =  await new Blob([pdfProp.buffer], { type: 'image/png' }).text();
+        const formFile = new FormData();
+        formFile.append('file', bufferPdf);
+        const rawRes = await fetch('/api/prescription/generateCopie', {
           method: 'POST',
-          headers: new Headers().set('Content-Type', 'application/pdf'),
           body: bufferPdf,
         });
-        const res = await cop.json();
-        console.log(res); 
+        const res = (await rawRes.body.getReader().read()).value.buffer;
+        setPdfLink(URL.createObjectURL(new Blob([res], { type: 'application/pdf' })))
+        
       }
-      gC();
-    }, [pdfProp]);
+      if(copie) {
+        gC();
+      } else {
+        setPdfLink(URL.createObjectURL(new Blob([pdfProp.buffer], { type: 'application/pdf' })));
+      }
+    }, [copie, pdfProp]);
     pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
     const fName = fullName.split(" ").join("_");
     const date = new Date().toLocaleDateString("en-US");
@@ -37,7 +44,7 @@ import { useEffect } from "react";
               <div className={style.prescriptionPreviewHeader}>
                 <a
                   download={`Prescrição_${fName}_${date}_${hash}.pdf`}
-                  href={ URL.createObjectURL(new Blob([pdfProp.buffer], { type: 'application/pdf' })) }
+                  href={ pdfLink }
                 >
                   <FontAwesomeIcon icon={faFileDownload} />
                 </a>

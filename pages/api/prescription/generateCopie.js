@@ -1,25 +1,23 @@
 import pdfJS from "pdfjs";
 import fs from "fs";
+import { Readable } from "stream";
+import { resolve } from "path";
 
 const generateCopies = async (req, res) => {
-  try {     
-    const src = req.body;
-    console.log(src);
-    // const resStream = await src.getRead().read();
+  try {    
+    const src = new Buffer(req.body).buffer;
+    fs.writeFileSync('./public/prescript.pdf', req.body);
     const doc = new pdfJS.Document({
       height: 700,
       width: 1050,
       padding: 0,
     });
-    const image = new pdfJS.Image(src); 
-    // doc.pipe(fs.createWriteStream("./public/generated/prescriptionCopie.pdf"));
+    const image = new pdfJS.Image(fs.readFileSync('./public/prescript.pdf'));
     const body = doc.table({ widths: [0, 0] }).row();
-    body.cell().image(image);  
     body.cell().image(image);
-
+    body.cell().image(image);
     const output = await doc.asBuffer();
-    const response = new Blob([output], { type: 'application/pdf' });
-      res.status(200).send(response);
+    res.status(200).json(output);
   } catch (error) {
     res
       .status(500)
