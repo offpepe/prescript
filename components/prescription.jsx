@@ -14,13 +14,11 @@ import { useEffect, useState } from "react";
         const bufferPdf =  await new Blob([pdfProp.buffer], { type: 'image/png' }).text();
         const formFile = new FormData();
         formFile.append('file', bufferPdf);
-        const rawRes = await fetch('/api/prescription/generateCopie', {
+        await fetch('/api/prescription/generateCopie', {
           method: 'POST',
           body: bufferPdf,
         });
-        const res = (await rawRes.body.getReader().read()).value.buffer;
-        setPdfLink(URL.createObjectURL(new Blob([res], { type: 'application/pdf' })))
-        
+        setPdfLink('/api/prescription/get'); 
       }
       if(copie) {
         gC();
