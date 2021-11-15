@@ -16,8 +16,8 @@ const generatePDF = async (req, res) => {
     );
     const droidMono = new pdfJS.Font(
       fs.readFileSync("./public/fonts/droid-sans-mono.regular.ttf")
-      );
-      const headerIMG = new pdfJS.Image(fs.readFileSync("./public/brasao.jpg"));
+    );
+    const headerIMG = new pdfJS.Image(fs.readFileSync("./public/brasao.jpg"));
     const secIMG = new pdfJS.Image(fs.readFileSync("./public/secIcon.jpeg"));
     const recipeSymbol = new pdfJS.Image(
       fs.readFileSync("./public/Rx_symbol.jpg")
@@ -59,12 +59,12 @@ const generatePDF = async (req, res) => {
         font: robotoBold,
       })
       .br();
-      header.cell({ paddingLeft: 0 }).image(secIMG, { width: 90 });
-      doc.footer().text("Voltando a consulta, fineza trazer esta Receita", {
-        textAlign: "center",
-        font: robotoItalicBold,
-        fontSize: 14,
-      });      
+    header.cell({ paddingLeft: 0 }).image(secIMG, { width: 90 });
+    doc.footer().text("Voltando a consulta, fineza trazer esta Receita", {
+      textAlign: "center",
+      font: robotoItalicBold,
+      fontSize: 14,
+    });
     const body = doc.table({ widths: [90, null], paddingTop: 40 }).row();
     body.cell().image(recipeSymbol, { width: 90 });
     body
@@ -159,11 +159,10 @@ const generatePDF = async (req, res) => {
       .add("DATA", { underline: false });
 
     const output = await doc.asBuffer();
-    fs.writeFileSync('./public/prescription.pdf', output);
+    fs.writeFileSync("./public/prescription.pdf", output);
     return res.status(200).send(output);
   } catch (err) {
     const message = { err: { code: "internal_error", message: err.message } };
-    console.log(message);
     res.status(500).send(message);
   }
 };
