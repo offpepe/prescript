@@ -3,27 +3,17 @@ import style from "../styles/Home.module.css";
 import Head from "next/head";
 import MedForm from "../components/medForm";
 import MedCard from "../components/medCard";
-import Prescription from "../components/prescription";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Form, Button, Spinner } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 export default function Home() {
   const [medications, setMedications] = useState([]);
-  const [fullname, setFullname] = useState('');
-  const [pdf, setPDF] = useState([]);
+  const [fullname, setFullname] = useState("");
   const [copie, setCopie] = useState(true);
   const [showMedsForm, setShow] = useState(false);
-  const [showPrescript, setShowPrescript] = useState(false);
   const [loading, setLoading] = useState(false);
-  
-  useEffect(() => {
-    document.addEventListener(
-      "keyup",
-      (ev) => ev.key === "Escape" && setShowPrescript(false)
-    );
-  }, [setShowPrescript]);
 
   const generatePDF = async () => {
     const prescriptionData = {
@@ -31,20 +21,22 @@ export default function Home() {
       medications,
     };
     setLoading(true);
-    const rawRes = await fetch(`/api/prescription/generate`, {
+    await fetch(`/api/prescription/generate`, {
       method: "POST",
       body: JSON.stringify(prescriptionData),
     });
-    const res = (await rawRes.body.getReader().read()).value.buffer;
-    setPDF(res);
-    setLoading(false)
-    setShowPrescript(true);
+    if (copie) {
+      await fetch("/api/prescription/generateCopie");
+    }
+    window.open("/prescription.pdf");
+    setLoading(false);
   };
 
   const removeMed = (index) => {
     const updated = medications.filter((_med, i) => i !== index);
     setMedications(updated);
   };
+
   return (
     <>
       <Head>
@@ -90,8 +82,7 @@ export default function Home() {
             <div className={style.addMedBtn}>
               <h4> Medicação </h4>
               <Button variant="dark" onClick={() => setShow(true)}>
-                {" "}
-                Adicionar Receita <FontAwesomeIcon icon={faPlusCircle} />{" "}
+                Adicionar medicação <FontAwesomeIcon icon={faPlusCircle} />
               </Button>
             </div>
             {medications &&
@@ -109,21 +100,24 @@ export default function Home() {
           <Button
             variant="success"
             type="button"
-            style={ { margin: '20px 0' } }
+            style={{ margin: "20px 0" }}
             onClick={() => generatePDF()}
             disabled={medications.length === 0 && true}
           >
-            { loading ?  <Spinner as="span" size="sm" role="status" aria-hidden="true" animation="border" /> : 'Gerar Prescrição' }
+            {loading ? (
+              <Spinner
+                as="span"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+                animation="border"
+              />
+            ) : (
+              "Gerar Prescrição"
+            )}
           </Button>
         )}
       </main>
-      <Prescription
-        show={showPrescript}
-        setShow={setShowPrescript}
-        copie={copie}
-        fullName={fullname}
-        pdf={ pdf }
-      />
     </>
   );
 }

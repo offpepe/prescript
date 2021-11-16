@@ -27,7 +27,6 @@ const generatePDF = async (req, res) => {
       author: "Filipe Lopes",
       padding: 12,
     });
-
     const header = doc
       .header()
       .table({ widths: [90, 300, 90], paddingTop: 30, paddingLeft: 50 })
@@ -66,7 +65,6 @@ const generatePDF = async (req, res) => {
       font: robotoItalicBold,
       fontSize: 14,
     });
-
     const body = doc.table({ widths: [90, null], paddingTop: 40 }).row();
     body.cell().image(recipeSymbol, { width: 90 });
     body
@@ -161,11 +159,10 @@ const generatePDF = async (req, res) => {
       .add("DATA", { underline: false });
 
     const output = await doc.asBuffer();
-    fs.writeFileSync('./public/generated/prescription.pdf', output);
+    fs.writeFileSync("./public/prescription.pdf", output);
     return res.status(200).send(output);
   } catch (err) {
     const message = { err: { code: "internal_error", message: err.message } };
-    console.log(message);
     res.status(500).send(message);
   }
 };
