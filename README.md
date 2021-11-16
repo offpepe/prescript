@@ -1,5 +1,5 @@
 # Welcome to Prescript 👋
-![Version](https://img.shields.io/badge/version-1.2.2-blue.svg?cacheSeconds=2592000)
+![Version](https://img.shields.io/badge/version-1.3.0-blue.svg?cacheSeconds=2592000)
 [![Twitter: Offplayer\_G](https://img.shields.io/twitter/follow/Offplayer\_G.svg?style=social)](https://twitter.com/Offplayer\_G)
 
 > Full stack app to generate medical prescription in pdf by a form
